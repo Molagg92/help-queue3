@@ -3,6 +3,6 @@ export const deleteTicket = id => ({
   id
 });
 
-// export const toggleForm = () => ({
-//   type: 'TOGGLE_FORM'
-// });
+export const toggleForm = () => ({
+  type: 'TOGGLE_FORM'
+});

@@ -2,6 +2,7 @@ import React from 'react';
 import NewTicketForm from './NewTicketForm';
 import TicketList from './TicketList';
 import TicketDetail from './TicketDetail';
+import EditTicketForm from './EditTicketForm';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 
@@ -19,7 +20,8 @@ class TicketControl extends React.Component {
     if (this.state.selectedTicket != null) {
       this.setState({
         formVisibleOnPage: false,
-        selectedTicket: null
+        selectedTicket: null,
+        editing: false
       });
     } else {
       this.setState(prevState => ({
@@ -41,6 +43,10 @@ class TicketControl extends React.Component {
       this.setState({formVisibleOnPage: false});
     }
 
+    handleEditClick = () => {
+      this.setState({editing: true});
+    }  
+
     handleEditingTicketInList = (ticketToEdit) => {
       const { dispatch } = this.props;
       const { id, names, location, issue } = ticketToEdit;
@@ -56,7 +62,7 @@ class TicketControl extends React.Component {
         editing: false,
         selectedTicket: null
       });
-    } 
+    }
     
     handleDeletingTicket = (id) => {
       const { dispatch } = this.props;
@@ -77,11 +83,14 @@ class TicketControl extends React.Component {
     let currentlyVisibleState = null;
     let buttonText = null;
 
-    if (this.state.selectedTicket != null) {
+    if (this.state.editing ) {      
+      currentlyVisibleState = <EditTicketForm ticket = {this.state.selectedTicket} onEditTicket = {this.handleEditingTicketInList} />
+      buttonText = "Return to Ticket List";
+    } else if (this.state.selectedTicket != null) {
       currentlyVisibleState = <TicketDetail 
                               ticket = {this.state.selectedTicket} 
                               onClickingDelete={this.handleDeletingTicket}
-                              onClickingEdit = {this.handleEditingTicketInList}/>
+                              onClickingEdit = {this.handleEditClick}/>
       buttonText = "Return to Ticket List";
     }
     else if (this.state.formVisibleOnPage) {
@@ -95,7 +104,7 @@ class TicketControl extends React.Component {
     return (
       <React.Fragment>
         {currentlyVisibleState}
-        <button onClick={this.handleClick}>{buttonText}</button> { /* new code */ }
+        <button onClick={this.handleClick}>{buttonText}</button>
       </React.Fragment>
     );
   }

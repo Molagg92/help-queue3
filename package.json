@@ -4,6 +4,7 @@
   "repository": {
     "url": "git+https://github.com/molagg92/help-queue3.git"
   },
+  "homepage": "https://molagg92.github.io/help-queue3",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

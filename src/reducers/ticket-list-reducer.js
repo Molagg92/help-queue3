@@ -4,15 +4,16 @@ const reducer = (state = {}, action) => {
   const { names, location, issue, id, formattedWaitTime, timeOpen } = action;
   switch (action.type) {
   case c.ADD_TICKET:
-    return {
-      ...state,
+    return Object.assign({}, state, {
       [id]: {
         names: names,
         location: location,
         issue: issue,
         id: id,
-      },
-    };
+        timeOpen: timeOpen,
+        formattedWaitTime: formattedWaitTime
+      }
+    });
 
     case c.DELETE_TICKET:
     let newState = { ...state };
